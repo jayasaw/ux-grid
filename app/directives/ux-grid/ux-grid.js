@@ -3,6 +3,11 @@
     angular.module('app')
         .controller('uxGridCtrl', function () {
             var vm = this;
+
+            function sortRow(row) {
+
+
+            }
         })
         .directive('myGrid', function () {
             return {
@@ -12,7 +17,8 @@
                 controllerAs: 'myGridCtrl',
                 bindToController: true,
                 scope: {
-                    gridSetting: '='
+                    gridSetting: '=',
+                    rowSetting : '='
                 }
             }
         })

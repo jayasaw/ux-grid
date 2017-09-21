@@ -6,7 +6,7 @@
             this.getGridConfig = getGridConfig
 
             var gridConfig = [
-                { columnName: 'id', displayName: 'Id' },
+                { columnName: 'id', displayName: 'Id', isSortable:false },
                 { columnName: 'name', displayName: 'Name' },
                 { columnName: 'city', displayName: 'City' },
                 { columnName: 'email', displayName: 'Email' }

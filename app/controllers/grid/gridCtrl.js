@@ -7,6 +7,10 @@
             configService.getGridConfig().then(function (response) {
                 vm.columnData = response;
 
+                dataService.getGridData().then(function(response){
+                    vm.rowData = response;
+                })
+
             });
 
         });

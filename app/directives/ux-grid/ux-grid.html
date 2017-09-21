@@ -2,4 +2,8 @@
     <tr>
         <th ng-repeat = 'grid in myGridCtrl.gridSetting track by $index'>{{grid.displayName}}</th>
     </tr>
+    <tr ng-repeat = 'row in myGridCtrl.rowSetting track by $index'>
+        <td ng-repeat = 'column in myGridCtrl.gridSetting'>{{row[column.columnName]}}</td>
+
+    </tr>
 </table>

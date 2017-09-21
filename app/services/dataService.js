@@ -14,7 +14,7 @@
             ];
 
             function getGridData() {
-                return $q.when('gridData')
+                return $q.when(gridData)
             }
 
         });
