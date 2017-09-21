@@ -1,0 +1,22 @@
+{
+  "name": "ux-grid",
+  "version": "1.0.0",
+  "description": "Dynamic grid",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jayasaw/ux-grid.git"
+  },
+  "author": "Jaya Saw",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jayasaw/ux-grid/issues"
+  },
+  "homepage": "https://github.com/jayasaw/ux-grid#readme",
+  "dependencies": {
+    "lite-server": "^2.3.0"
+  }
+}
