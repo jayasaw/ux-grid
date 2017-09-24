@@ -40,7 +40,13 @@
                 pageSize = 5;
                 var pages = [];
                 if (vm.rowSetting) {
-                    var pageCount = vm.rowSetting.length / pageSize;
+                    var mod = vm.rowSetting.length % pageSize;
+                    // if(mod){
+                    //     (vm.rowSetting.length / pageSize) + 1;
+                    // } else {
+                    //     vm.rowSetting.length / pageSize;
+                    // }
+                    var pageCount = mod ? (vm.rowSetting.length / pageSize) + 1 : vm.rowSetting.length / pageSize;
                     for (var i = 1; i <= pageCount; i++) {
                         pages.push(i);
                     }
@@ -48,6 +54,8 @@
                 }
                 return pages;
             }
+
+
 
 
             function activate() {
