@@ -18,7 +18,8 @@
                 bindToController: true,
                 scope: {
                     gridSetting: '=',
-                    rowSetting : '='
+                    rowSetting : '=',
+                    delete : '&'
                 }
             }
         })

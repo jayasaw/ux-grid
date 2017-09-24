@@ -1,8 +1,14 @@
 <div class='container' ng-controller='gridCtrl as grid'>
     <div class='row'>
         <div class='col-md-10 col-md-offset-1'>
+            
+            <div class = 'form-group'> 
+                <label>Search</label>
+                <input type = 'text' ng-model = 'grid.search' class = 'form-control-col-md-3' placeholder="search">
 
-            <my-grid grid-setting='grid.columnData' row-setting = 'grid.rowData'>
+            </div>
+       
+            <my-grid grid-setting='grid.columnData' row-setting = 'grid.rowData' delete = 'grid.delete(id)'>
             </my-grid>
         </div>
 

@@ -3,6 +3,10 @@
     angular.module('app')
         .controller('gridCtrl', function (configService, dataService) {
             var vm = this;
+            this.cuttext = false;
+            this.pastetext = false;
+            this.copytext = false;
+
 
             configService.getGridConfig().then(function (response) {
                 vm.columnData = response;
@@ -12,6 +16,11 @@
                 })
 
             });
+
+         vm.delete = function(id){
+            dataService.deleteData(id); 
+         }
+
 
         });
 })();

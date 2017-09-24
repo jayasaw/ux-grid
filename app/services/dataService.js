@@ -4,6 +4,7 @@
         .service('dataService', function ($q) {
 
             this.getGridData = getGridData;
+            this.deleteData = deleteData;
 
             var gridData = [
                 { id: 1, name: 'abc', city: 'jamshedpur', email: 'ja@gmail.com' },
@@ -16,6 +17,14 @@
             function getGridData() {
                 return $q.when(gridData)
             }
+
+           function deleteData(id){
+               for(var i = 0; i<gridData.length ; i++){
+                   if(gridData[i].id === id){
+                        gridData.splice(i,1);
+                   }
+               }
+           }
 
         });
 })();
