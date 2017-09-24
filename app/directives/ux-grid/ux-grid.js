@@ -3,11 +3,58 @@
     angular.module('app')
         .controller('uxGridCtrl', function () {
             var vm = this;
+            vm.filterCriteria = filterCriteria;
+            vm.getPageCounts = getPageCounts;
 
+
+            vm.search = {}
             function sortRow(row) {
 
 
             }
+
+            function goTo(page) {
+
+            }
+
+            function filterCriteria() {
+
+                var criteria = {};
+                if (vm.gridSetting) {
+                    vm.gridSetting.forEach(function (item) {
+                        if (item.isFilter) {
+                            criteria[item.columnName] = vm.search[item.columnName];
+                        }
+
+                    });
+                }
+
+                console.log(criteria);
+
+                return criteria;
+
+            }
+
+
+            function getPageCounts(pageSize) {
+                pageSize = 5;
+                var pages = [];
+                if (vm.rowSetting) {
+                    var pageCount = vm.rowSetting.length / pageSize;
+                    for (var i = 1; i <= pageCount; i++) {
+                        pages.push(i);
+                    }
+
+                }
+                return pages;
+            }
+
+
+            function activate() {
+                vm.pageNo = 1;
+            }
+
+            activate();
         })
         .directive('myGrid', function () {
             return {
@@ -18,8 +65,9 @@
                 bindToController: true,
                 scope: {
                     gridSetting: '=',
-                    rowSetting : '=',
-                    delete : '&'
+                    rowSetting: '=',
+                    delete: '&',
+                    filterCon: '='
                 }
             }
         })
