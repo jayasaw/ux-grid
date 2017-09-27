@@ -1,18 +1,28 @@
-<table class='table table-striped'>
-    <tr>
-        <th ng-repeat='grid in myGridCtrl.gridSetting  track by $index '>
-            <span> {{grid.displayName}} </span>
-            <div ng-if="grid.isFilter"> <input type='text' ng-model='myGridCtrl.search[grid.columnName]' class='form-control-col-md-3' placeholder="search"></div>
-        </th>
-    </tr>
-    <tr ng-repeat='row in myGridCtrl.rowSetting | pagination:myGridCtrl.pageNo | filter:myGridCtrl.filterCriteria() track by $index'>
-        <td ng-repeat='column in myGridCtrl.gridSetting track by $index'>{{row[column.columnName]}}
-            <button ng-repeat='btn in column.action track by $index' class='btn btn-info' ng-click='myGridCtrl.delete({id:row.id})'>
-         {{btn.button}}</button>
-        </td>
+<div style="overflow-x:auto">
+    <table class='table table-striped table-hover' style="min-width:100%" ng-style="myGridCtrl.getTableWidth()">
+        <tr>
+            <th ng-repeat='grid in myGridCtrl.gridSetting  track by $index ' ng-style="{width:grid.size ?  grid.size: (myGridCtrl.tableDeafultColumnSize + 'px') }">
+                <a ng-if="grid.sortable" href="" ng-click="myGridCtrl.sortColumn(grid)"> <span> {{grid.displayName}} </span>
+                 <span ng-if="grid.sortOrder=='asc'" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                 <span ng-if="grid.sortOrder=='desc'" class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+                </a>
+                <span ng-if="!grid.sortable"> {{grid.displayName}} </span>
+                <div ng-if="grid.isFilter"> <input type='text' ng-model='myGridCtrl.search[grid.columnName]' class='form-control col-md-3' placeholder="search"></div>
+            </th>
+        </tr>
+        <tr ng-repeat='(rowIndex, row) in myGridCtrl.rowSetting | pagination:myGridCtrl.pageNo | filter:myGridCtrl.filterCriteria() track by $index'>
+            <td ng-repeat='column in myGridCtrl.gridSetting track by $index'>
+                <div ng-if="grid.isFilter"> <input type='text' ng-model='myGridCtrl.search[grid.columnName]' class='form-control col-md-3' placeholder="search"></div>
+                <span>{{row[column.columnName]}}</span>
+                <a href="" style="padding-right:10px" ng-repeat='btn in column.actionButtons track by $index' data-toggle="tooltip" data-placement="bottom"
+                    title="{{btn.action}}" ng-click="myGridCtrl.actionClick(row, btn.action)">
+                    <span  class="glyphicon {{btn.icon}}" aria-hidden="true"></span>
+                </a>
+            </td>
 
-    </tr>
-</table>
+        </tr>
+    </table>
+</div>
 
 <nav aria-label="Page navigation">
     <ul class="pagination">

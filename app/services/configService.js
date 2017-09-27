@@ -7,7 +7,7 @@
             this.getUserGridConfig = getUserGridConfig;
 
             var gridConfig = [
-                { columnName: 'id', displayName: 'Id', link: true },
+                { columnName: 'id', displayName: 'Id', link: true, sortable:true},
                 { columnName: 'name', displayName: 'Name', link: true },
                 { columnName: 'city', displayName: 'City' },
                 { columnName: 'email', displayName: 'Email' },
@@ -18,12 +18,19 @@
             ];
 
             var userGridConfig = [
-                { columnName: 'id', displayName: 'Id', link: true },
-                { columnName: 'name', displayName: 'Name', link: true, isFilter:true  },
-                { columnName: 'city', displayName: 'City', isFilter:true  },
-                { columnName: 'phone', displayName: 'Phone' },
-                { columnName: 'email', displayName: 'Email',isFilter:true },
-                { columnName: 'website', displayName: 'Website' }
+                { columnName: 'id', displayName: 'Id', link: true, sortable:true, sortOrder:'asc', size: '100px'  },
+                { columnName: 'name', displayName: 'Name', link: true, isFilter:true, sortable:true, size: '200px' },
+                { columnName: 'city', displayName: 'City', isFilter:true , size: '200px'},
+                { columnName: 'phone', displayName: 'Phone', size: '200px' },
+                { columnName: 'email', displayName: 'Email',isFilter:true, size: '200px' },
+                { columnName: 'website', displayName: 'Website', size: '200px' },
+                {
+                    columnName: 'button', displayName: 'Action', size: '100px', actionButtons: [
+                        { action: 'delete', icon: 'glyphicon-trash' },
+                        { action: 'edit', icon: 'glyphicon-edit' },
+                        { action: 'save', icon: 'glyphicon-save' },
+                    ]
+                }
             ];
 
             function getGridConfig() {
