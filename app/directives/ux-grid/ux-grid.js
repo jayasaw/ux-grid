@@ -8,6 +8,7 @@
             vm.sortColumn = sortColumn;
             vm.getPageCounts = getPageCounts;
             vm.tableDeafultColumnSize = 200;
+            vm.enableSave = [];
 
 
             vm.search = {}
@@ -91,7 +92,7 @@
 
             // inline action button function call
 
-            vm.actionClick = function (row, action) {
+            vm.actionClick = function (row, action, rowIndex) {
                 console.log(action);
                 console.log(row);
                 if (action === 'delete') {
@@ -99,13 +100,25 @@
                 }
                 if (action === 'edit') {
                     vm.saveEnabled = true;
-                    editRow(row);
+                    editRow(row, rowIndex);
                 }
 
                 if (action === 'save') {
                     vm.saveEnabled = false;
-                    saveRow(row);
+                    saveRow(row, rowIndex);
                 }
+            }
+
+            function editRow(row, rowIndex) {
+                toggaleSaveEditFn(rowIndex);
+            }
+
+            function saveRow(row, rowIndex) {
+                toggaleSaveEditFn(rowIndex);
+            }
+
+            function toggaleSaveEditFn(rowIndex) {
+                vm.enableSave[rowIndex] = !vm.enableSave[rowIndex];
             }
 
 
@@ -143,6 +156,16 @@
                 return { width: width == 0 ? '100%' : width + 'px' };
 
             }
+            vm.showLink = function (action, rowIndex) {
+                if (action === 'save') {
+                    return vm.enableSave[rowIndex];
+                } else if (action === 'edit') {
+
+                    return !vm.enableSave[rowIndex];
+                }
+
+                return true;
+            }
 
             activate();
         })
@@ -151,12 +174,12 @@
                 restrict: 'E',
                 templateUrl: 'app/directives/ux-grid/ux-grid.html',
                 controller: 'uxGridCtrl',
-                controllerAs: 'myGridCtrl',
+                controllerAs: 'uxGrid',
                 bindToController: true,
                 scope: {
                     gridSetting: '=',
                     rowSetting: '=',
-                    delete: '=',
+                    delete: '@',
                     edit: '=',
                     save: '=',
                     filterCon: '='

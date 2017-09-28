@@ -1,24 +1,26 @@
 <div style="overflow-x:auto">
-    <table class='table table-striped table-hover' style="min-width:100%" ng-style="myGridCtrl.getTableWidth()">
+    <table class='table table-striped table-hover' style="min-width:100%" ng-style="uxGrid.getTableWidth()">
         <tr>
-            <th ng-repeat='grid in myGridCtrl.gridSetting  track by $index ' ng-style="{width:grid.size ?  grid.size: (myGridCtrl.tableDeafultColumnSize + 'px') }">
-                <a ng-if="grid.sortable" href="" ng-click="myGridCtrl.sortColumn(grid)"> <span> {{grid.displayName}} </span>
+            <th ng-repeat='grid in uxGrid.gridSetting  track by $index ' ng-style="{width:grid.size ?  grid.size: (uxGrid.tableDeafultColumnSize + 'px') }">
+                <a ng-if="grid.sortable" href="" ng-click="uxGrid.sortColumn(grid)"> <span> {{grid.displayName}} </span>
                  <span ng-if="grid.sortOrder=='asc'" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
                  <span ng-if="grid.sortOrder=='desc'" class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
                 </a>
                 <span ng-if="!grid.sortable"> {{grid.displayName}} </span>
-                <div ng-if="grid.isFilter"> <input type='text' ng-model='myGridCtrl.search[grid.columnName]' class='form-control col-md-3' placeholder="search"></div>
+                <div ng-if="grid.isFilter"> <input type='text' ng-model='uxGrid.search[grid.columnName]' class='form-control col-md-3' placeholder="search"></div>
             </th>
         </tr>
-        <tr ng-repeat='(rowIndex, row) in myGridCtrl.rowSetting | pagination:myGridCtrl.pageNo | filter:myGridCtrl.filterCriteria() track by $index'>
-            <td ng-repeat='column in myGridCtrl.gridSetting track by $index'>
-                <div ng-if="grid.isFilter"> <input type='text' ng-model='myGridCtrl.search[grid.columnName]' class='form-control col-md-3' placeholder="search"></div>
-                <span>{{row[column.columnName]}}</span>
-                <a href="" style="padding-right:10px" ng-repeat='btn in column.actionButtons track by $index' data-toggle="tooltip" data-placement="bottom"
-                    title="{{btn.action}}" ng-click="myGridCtrl.actionClick(row, btn.action)">
-                    <span  class="glyphicon {{btn.icon}}" aria-hidden="true"></span>
-                </a>
+        <tr ng-repeat='(rowIndex, row) in uxGrid.rowSetting | pagination:uxGrid.pageNo | filter:uxGrid.filterCriteria() track by $index'>
+            <td ng-repeat='column in uxGrid.gridSetting track by $index'>
+                <div ng-if="uxGrid.enableSave[rowIndex] && column.editable"> <input type='text' ng-model='row[column.columnName]' class='form-control col-md-3' placeholder="{{column.displayName}}"></div>
+                <span ng-if="!uxGrid.enableSave[rowIndex] || !column.editable">{{row[column.columnName]}}</span>
+                <a href="" ng-if="uxGrid.showLink(btn.action, rowIndex)" style="padding-right:10px" ng-repeat='btn in column.actionButtons track by $index'
+                    data-toggle="tooltip" data-placement="bottom" title="{{btn.action}}" ng-click="uxGrid.actionClick(row, btn.action, rowIndex)">
+            <span  class="glyphicon {{btn.icon}}" aria-hidden="true"></span>
+           </a>
             </td>
+
+
 
         </tr>
     </table>
@@ -31,7 +33,7 @@
               <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
-        <li ng-repeat="page in myGridCtrl.getPageCounts()"><a href="" ng-click="myGridCtrl.pageNo = page">{{page}}</a></li>
+        <li ng-repeat="page in uxGrid.getPageCounts()"><a href="" ng-click="uxGrid.pageNo = page">{{page}}</a></li>
         <li>
             <a href="#" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
