@@ -31,8 +31,8 @@
             function filterCriteria() {
 
                 var criteria = {};
-                if (vm.gridSetting) {
-                    vm.gridSetting.forEach(function (item) {
+                if (vm.gridColumns) {
+                    vm.gridColumns.forEach(function (item) {
                         if (item.isFilter) {
                             criteria[item.columnName] = vm.search[item.columnName];
                         }
@@ -54,14 +54,14 @@
             function getPageCounts(pageSize) {
                 pageSize = 5;
                 var pages = [];
-                if (vm.rowSetting) {
-                    var mod = vm.rowSetting.length % pageSize;
+                if (vm.gridRows) {
+                    var mod = vm.gridRows.length % pageSize;
                     // if(mod){
-                    //     (vm.rowSetting.length / pageSize) + 1;
+                    //     (vm.gridRows.length / pageSize) + 1;
                     // } else {
-                    //     vm.rowSetting.length / pageSize;
+                    //     vm.gridRows.length / pageSize;
                     // }
-                    var pageCount = mod ? (vm.rowSetting.length / pageSize) + 1 : vm.rowSetting.length / pageSize;
+                    var pageCount = mod ? (vm.gridRows.length / pageSize) + 1 : vm.gridRows.length / pageSize;
                     for (var i = 1; i <= pageCount; i++) {
                         pages.push(i);
                     }
@@ -80,12 +80,12 @@
                 console.log(grid);
 
                 if (grid.sortOrder == 'asc') {
-                    vm.rowSetting.sort(function (a, b) {
+                    vm.gridRows.sort(function (a, b) {
                         return a[grid.columnName] > b[grid.columnName] ? -1 : 1;
                     });
                     grid.sortOrder = 'desc';
                 } else {
-                    vm.rowSetting.sort(function (a, b) {
+                    vm.gridRows.sort(function (a, b) {
                         return a[grid.columnName] < b[grid.columnName] ? -1 : 1;
                     });
 
@@ -158,7 +158,7 @@
              */
             function saveRow() {
                 vm.showSave = false;
-                vm.rowSetting.unshift(vm.addedRow);
+                vm.gridRows.unshift(vm.addedRow);
 
             }
 
@@ -181,8 +181,8 @@
             function deletRow(row) {
 
                 var matched = false;
-                for (var i = 0; i < vm.rowSetting.length; i++) {
-                    var item = vm.rowSetting[i];
+                for (var i = 0; i < vm.gridRows.length; i++) {
+                    var item = vm.gridRows[i];
                     for (var prop in row) {
                         if (row[prop] === item[prop]) {
                             matched = true;
@@ -192,7 +192,7 @@
                         }
                     }
                     if (matched) {
-                        vm.rowSetting.splice(i, 1);
+                        vm.gridRows.splice(i, 1);
                         break;
                     }
 
@@ -208,8 +208,8 @@
              */
             function getTableWidth() {
                 var width = 0;
-                if (vm.gridSetting) {
-                    vm.gridSetting.forEach(function (item) {
+                if (vm.gridColumns) {
+                    vm.gridColumns.forEach(function (item) {
                         width = width + (item.size ? +item.size.substring(0, item.size.length - 2) : vm.tableDeafultColumnSize);
                     });
                 }
@@ -251,7 +251,7 @@
              */
             activate();
         })
-        .directive('myGrid', function () {
+        .directive('uxGrid', function () {
             return {
                 restrict: 'E',
                 templateUrl: 'app/directives/ux-grid/ux-grid.html',
@@ -259,8 +259,8 @@
                 controllerAs: 'uxGrid',
                 bindToController: true,
                 scope: {
-                    gridSetting: '=',
-                    rowSetting: '=',
+                    gridColumns: '=',
+                    gridRows: '=',
                     delete: '@',
                     edit: '=',
                     save: '=',
