@@ -14,14 +14,32 @@
             <td ng-repeat='column in uxGrid.gridSetting track by $index'>
                 <div ng-if="uxGrid.enableSave[rowIndex] && column.editable"> <input type='text' ng-model='row[column.columnName]' class='form-control col-md-3' placeholder="{{column.displayName}}"></div>
                 <span ng-if="!uxGrid.enableSave[rowIndex] || !column.editable">{{row[column.columnName]}}</span>
-                <a href="" ng-if="uxGrid.showLink(btn.action, rowIndex)" style="padding-right:10px" ng-repeat='btn in column.actionButtons track by $index'
+                <a href="" ng-if="uxGrid.showActionButton(btn.action, rowIndex)" style="padding-right:10px" ng-repeat='btn in column.actionButtons track by $index'
                     data-toggle="tooltip" data-placement="bottom" title="{{btn.action}}" ng-click="uxGrid.actionClick(row, btn.action, rowIndex)">
             <span  class="glyphicon {{btn.icon}}" aria-hidden="true"></span>
            </a>
             </td>
 
+        </tr>
+        <tr ng-if="uxGrid.showSave">
+            <td ng-repeat='column in uxGrid.gridSetting track by $index'>
+                <div ng-if="column.editable"> <input type='text' ng-model='uxGrid.addedRow[column.columnName]' class='form-control col-md-3' placeholder="{{column.displayName}}"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="7" ng-if="!uxGrid.showSave">
+                <a href="" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="{{btn.action}}" ng-click="uxGrid.addRow()">
+                    <!-- <span  class="glyphicon {{btn.icon}}" aria-hidden="true"></span> -->
+                    Add Row
+                </a>
+            </td>
 
-
+            <td colspan="7" ng-if="uxGrid.showSave">
+                    <a href="" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="{{btn.action}}" ng-click="uxGrid.saveRow()">
+                        <!-- <span  class="glyphicon {{btn.icon}}" aria-hidden="true"></span> -->
+                        Save Row
+                    </a>
+                </td>
         </tr>
     </table>
 </div>

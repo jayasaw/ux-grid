@@ -18,7 +18,7 @@
             ];
 
             var userGridConfig = [
-                { columnName: 'id', displayName: 'Id', link: true, sortable: true, sortOrder: 'asc', size: '100px', editable: false },
+                { columnName: 'id', displayName: 'Id', link: true, sortable: true, sortOrder: 'asc', size: '100px', editable: true },
                 { columnName: 'name', displayName: 'Name', link: true, isFilter: true, sortable: true, size: '200px', editable: true },
                 { columnName: 'city', displayName: 'City', isFilter: true, size: '200px', editable: true },
                 { columnName: 'phone', displayName: 'Phone', size: '200px', editable: true },

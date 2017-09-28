@@ -4,23 +4,30 @@
         .controller('uxGridCtrl', function () {
             var vm = this;
 
+
+            vm.tableDeafultColumnSize = 200;
+            vm.enableSave = [];
+            vm.search = {}
+
+
+            /**
+             * controller function
+             */
             vm.filterCriteria = filterCriteria;
             vm.sortColumn = sortColumn;
             vm.getPageCounts = getPageCounts;
-            vm.tableDeafultColumnSize = 200;
-            vm.enableSave = [];
+            vm.actionClick = actionClick;
+            vm.addRow = addRow;
+            vm.getTableWidth = getTableWidth;
+            vm.saveRow = saveRow;
+            vm.showActionButton = showActionButton;
 
 
-            vm.search = {}
-            function sortRow(row) {
-
-
-            }
-
-            function goTo(page) {
-
-            }
-
+            /**
+             * 
+             * criteria filter for searching of each column
+             *
+             */
             function filterCriteria() {
 
                 var criteria = {};
@@ -38,6 +45,12 @@
             }
 
 
+            /**
+             * 
+             * Get page count for pagination
+             *
+             * @param {*} pageSize 
+             */
             function getPageCounts(pageSize) {
                 pageSize = 5;
                 var pages = [];
@@ -56,14 +69,6 @@
                 }
                 return pages;
             }
-
-
-
-
-            function activate() {
-                vm.pageNo = 1;
-            }
-
 
             /**
              * 
@@ -90,38 +95,89 @@
 
             }
 
-            // inline action button function call
+            /**
+             * 
+             * inline action button for each row 
+             * 
+             * @param {*} row 
+             * @param {*} action 
+             * @param {*} rowIndex 
+             */
 
-            vm.actionClick = function (row, action, rowIndex) {
+
+            function actionClick(row, action, rowIndex) {
                 console.log(action);
                 console.log(row);
                 if (action === 'delete') {
                     deletRow(row);
                 }
                 if (action === 'edit') {
-                    vm.saveEnabled = true;
                     editRow(row, rowIndex);
                 }
 
                 if (action === 'save') {
-                    vm.saveEnabled = false;
-                    saveRow(row, rowIndex);
+                    saveEditeRow(row, rowIndex);
                 }
             }
 
+
+            /**
+             * 
+             * edit rows
+             * 
+             * @param {*} row 
+             * @param {*} rowIndex 
+             */
             function editRow(row, rowIndex) {
                 toggaleSaveEditFn(rowIndex);
             }
 
-            function saveRow(row, rowIndex) {
+            /**
+             * 
+             * Saved edited row 
+             * 
+             * @param {*} row 
+             * @param {*} rowIndex 
+             */
+            function saveEditeRow(row, rowIndex) {
                 toggaleSaveEditFn(rowIndex);
             }
 
+
+            /**
+             * show inputs to add the values
+             * 
+             */
+            function addRow() {
+                vm.showSave = true;
+                vm.addedRow = null;
+            }
+
+            /**
+             * Save added row;
+             */
+            function saveRow() {
+                vm.showSave = false;
+                vm.rowSetting.unshift(vm.addedRow);
+
+            }
+
+            /**
+             * Toggle betwen edit and save for each row 
+             * 
+             * @param {*} rowIndex 
+             */
             function toggaleSaveEditFn(rowIndex) {
                 vm.enableSave[rowIndex] = !vm.enableSave[rowIndex];
             }
 
 
+            /**
+             * 
+             * 
+             * 
+             * @param {* delete row by comparing each column value} row 
+             */
             function deletRow(row) {
 
                 var matched = false;
@@ -145,7 +201,12 @@
 
             }
 
-            vm.getTableWidth = function () {
+            /**
+             * 
+             * Get full withd of table by adding all column width;
+             * 
+             */
+            function getTableWidth() {
                 var width = 0;
                 if (vm.gridSetting) {
                     vm.gridSetting.forEach(function (item) {
@@ -156,7 +217,15 @@
                 return { width: width == 0 ? '100%' : width + 'px' };
 
             }
-            vm.showLink = function (action, rowIndex) {
+
+            /**
+             * 
+             * Toggle between save and edit button
+             * 
+             * @param {* action type name} action 
+             * @param {* selected action row index} rowIndex 
+             */
+            function showActionButton(action, rowIndex) {
                 if (action === 'save') {
                     return vm.enableSave[rowIndex];
                 } else if (action === 'edit') {
@@ -167,6 +236,19 @@
                 return true;
             }
 
+
+            /**
+             * 
+             * activate function for the controller;
+             * 
+             */
+            function activate() {
+                vm.pageNo = 1;
+            }
+
+            /**
+             * activate controller
+             */
             activate();
         })
         .directive('myGrid', function () {
