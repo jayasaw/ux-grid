@@ -1,13 +1,48 @@
+/**
+ * TODO: Add Copy paste functionality
+ * TODO: Add draggable row functionality
+ * TODO: Add keyboard functionality
+ * TODO: add more functionality to pagination
+ * 
+ */
+
 (function () {
     'use strict'
     angular.module('app')
+        .directive('uxGrid', function () {
+            return {
+                restrict: 'E',
+                templateUrl: 'app/directives/ux-grid/ux-grid.html',
+                controller: 'uxGridCtrl',
+                controllerAs: 'uxGrid',
+                bindToController: true,
+                scope: {
+                    gridColumns: '=',
+                    gridRows: '=',
+                    delete: '@',
+                    edit: '=',
+                    save: '=',
+                    filterCon: '='
+                }
+            }
+        })
         .controller('uxGridCtrl', function () {
             var vm = this;
 
 
+            /**
+             * Controller varibales
+             */
             vm.tableDeafultColumnSize = 200;
             vm.enableSave = [];
             vm.search = {}
+
+
+            /**
+             * private varibales
+             */
+
+            var _test;
 
 
             /**
@@ -76,8 +111,6 @@
              * @param {*} grid 
              */
             function sortColumn(grid) {
-
-                console.log(grid);
 
                 if (grid.sortOrder == 'asc') {
                     vm.gridRows.sort(function (a, b) {
@@ -251,21 +284,5 @@
              */
             activate();
         })
-        .directive('uxGrid', function () {
-            return {
-                restrict: 'E',
-                templateUrl: 'app/directives/ux-grid/ux-grid.html',
-                controller: 'uxGridCtrl',
-                controllerAs: 'uxGrid',
-                bindToController: true,
-                scope: {
-                    gridColumns: '=',
-                    gridRows: '=',
-                    delete: '@',
-                    edit: '=',
-                    save: '=',
-                    filterCon: '='
-                }
-            }
-        })
+
 })();
