@@ -1,5 +1,6 @@
 <div style="overflow-x:auto">
-    <table class='table table-striped table-hover' style="min-width:100%" ng-style="uxGrid.getTableWidth()">
+    <table class='table table-striped table-hover'  style="min-width:100%"
+        ng-style="uxGrid.getTableWidth()">
         <tr>
             <th ng-repeat='grid in uxGrid.gridColumns  track by $index ' ng-style="{width:grid.size ?  grid.size: (uxGrid.tableDeafultColumnSize + 'px') }">
                 <a ng-if="grid.sortable" href="" ng-click="uxGrid.sortColumn(grid)"> <span> {{grid.displayName}} </span>
@@ -10,10 +11,29 @@
                 <div ng-if="grid.isFilter"> <input type='text' ng-model='uxGrid.search[grid.columnName]' class='form-control col-md-3' placeholder="search"></div>
             </th>
         </tr>
-        <tr ng-repeat='(rowIndex, row) in uxGrid.gridRows | pagination:uxGrid.pageNo | filter:uxGrid.filterCriteria() track by $index'>
-            <td ng-repeat='column in uxGrid.gridColumns track by $index'>
+        <tr ng-drag="true" ng-drag-data="row" ng-drop="true" ng-drop-success="uxGrid.onDropComplete($data,$event)" ng-drag-success="uxGrid.onDragComplete($data,$event)" ng-repeat='(rowIndex, row) in uxGrid.gridRows | pagination:uxGrid.pageNo | filter:uxGrid.filterCriteria() track by $index'>
+            <td style="position: relative" ng-repeat='column in uxGrid.gridColumns track by $index'>
+
+
+                <div class="dropup" ng-if="$index === 0" style="position:absolute; right:2px;">
+                    <a class="dropdown-toggle" href="" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              
+                            <span class="glyphicon glyphicon-option-horizontal"></span> 
+                </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <li><a href="" ng-if="!uxGrid.copiedRow" ng-click="uxGrid.copyRow(row)">copy row</a></li>
+                        <li><a href="" ng-if="uxGrid.copiedRow" ng-click="uxGrid.rowPaste(row)">paste in</a></li>
+                        <li><a href="" ng-if="uxGrid.copiedRow" ng-click="uxGrid.rowPasteAfter(row)">paste after</a></li>
+                        <li><a href="" ng-click="uxGrid.resetSelection(row)">reset seletction</a></li>
+                    </ul>
+                </div>
+
+
+
+                <!-- <div ng-if="$index === 0" data-toggle="tooltip" data-placement="bottom" title="copy row" style="position:absolute; right:2px"><a href="" ng-click=""><span class="glyphicon glyphicon-option-horizontal"></span> </a> </div>
+                <div ng-if="$index === 0" data-toggle="tooltip" data-placement="bottom" title="copy row" style="position:absolute; right:2px"><a href="" ng-click=""><span class="glyphicon glyphicon-option-horizontal"></span> </a> </div> -->
                 <div ng-if="uxGrid.enableSave[rowIndex] && column.editable"> <input type='text' ng-model='row[column.columnName]' class='form-control col-md-3' placeholder="{{column.displayName}}"></div>
-                <span ng-if="!uxGrid.enableSave[rowIndex] || !column.editable">{{row[column.columnName]}}</span>
+                <span ng-if="!uxGrid.enableSave[rowIndex] || !column.editable">{{row[column.columnName]}} </span>
                 <a href="" ng-if="uxGrid.showActionButton(btn.action, rowIndex)" style="padding-right:10px" ng-repeat='btn in column.actionButtons track by $index'
                     data-toggle="tooltip" data-placement="bottom" title="{{btn.action}}" ng-click="uxGrid.actionClick(row, btn.action, rowIndex)">
             <span  class="glyphicon {{btn.icon}}" aria-hidden="true"></span>
@@ -23,7 +43,7 @@
         </tr>
         <tr ng-if="uxGrid.showSave">
             <td ng-repeat='column in uxGrid.gridColumns track by $index'>
-                <div ng-if="column.editable"> <input type='text' ng-model='uxGrid.addedRow[column.columnName]' class='form-control col-md-3' placeholder="{{column.displayName}}"></div>
+                <div ng-if="column.editable"> <input type='text' ng-paste ng-model='uxGrid.addedRow[column.columnName]' class='form-control col-md-3' placeholder="{{column.displayName}}"></div>
             </td>
         </tr>
         <tr>
@@ -35,11 +55,11 @@
             </td>
 
             <td colspan="7" ng-if="uxGrid.showSave">
-                    <a href="" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="{{btn.action}}" ng-click="uxGrid.saveRow()">
-                        <!-- <span  class="glyphicon {{btn.icon}}" aria-hidden="true"></span> -->
-                        Save Row
-                    </a>
-                </td>
+                <a href="" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="{{btn.action}}" ng-click="uxGrid.saveRow()">
+                    <!-- <span  class="glyphicon {{btn.icon}}" aria-hidden="true"></span> -->
+                    Save Row
+                </a>
+            </td>
         </tr>
     </table>
 </div>

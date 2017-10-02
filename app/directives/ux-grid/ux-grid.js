@@ -26,7 +26,7 @@
                 }
             }
         })
-        .controller('uxGridCtrl', function () {
+        .controller('uxGridCtrl', function ($scope) {
             var vm = this;
 
 
@@ -36,6 +36,7 @@
             vm.tableDeafultColumnSize = 200;
             vm.enableSave = [];
             vm.search = {}
+            vm.copiedRow = null;
 
 
             /**
@@ -56,6 +57,12 @@
             vm.getTableWidth = getTableWidth;
             vm.saveRow = saveRow;
             vm.showActionButton = showActionButton;
+            vm.copyRow = copyRow;
+            vm.resetSelection = resetSelection;
+            vm.rowPaste = rowPaste;
+            vm.rowPasteAfter = rowPasteAfter;
+            vm.onDragComplete = onDragComplete;
+            vm.onDropComplete = onDropComplete
 
 
             /**
@@ -202,6 +209,75 @@
              */
             function toggaleSaveEditFn(rowIndex) {
                 vm.enableSave[rowIndex] = !vm.enableSave[rowIndex];
+            }
+
+            function findIndex(arr, obj) {
+
+                var matched = false;
+                for (var i = 0; i < arr.length; i++) {
+                    var item = arr[i];
+                    for (var prop in obj) {
+                        if (obj[prop] === item[prop]) {
+                            matched = true;
+                        } else {
+                            matched = false;
+                            break;
+                        }
+                    }
+                    if (matched) {
+                        return i;
+                    }
+
+                }
+                return null;
+
+            }
+
+            /**
+             * Draggable and drop functionality
+             */
+
+            function onDragComplete(data, event) {
+                console.log('drag', data, event);
+            }
+
+            function onDropComplete(data, event) {
+                console.log('drop', data, event);
+            }
+
+            $scope.$on('draggable:end', onDraggableEvent);
+            function onDraggableEvent(data, event) {
+                console.log('end', data, event);
+            }
+
+
+            /**
+             * Copy paste functionality
+             * @param {*} row 
+             */
+            function copyRow(row) {
+                vm.copiedRow = row;
+            }
+
+            function resetSelection() {
+                vm.copiedRow = null;
+            }
+
+            function rowPaste(row) {
+
+                var i = findIndex(vm.gridRows, row);
+                if (i !== null) {
+                    vm.gridRows.splice(i, 1, vm.copiedRow);
+                }
+                vm.copiedRow = null;
+            }
+
+            function rowPasteAfter(row) {
+                var i = findIndex(vm.gridRows, row);
+                if (i !== null) {
+                    vm.gridRows.splice(i + 1, 0, vm.copiedRow);
+                }
+                vm.copiedRow = null;
             }
 
 
