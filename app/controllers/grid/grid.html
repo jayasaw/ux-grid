@@ -1,4 +1,8 @@
 <div class='container' ng-controller='gridCtrl as grid'>
+    
+    <div class="row">
+        <button ng-click="grid.showTable =  !grid.showTable" class="btn btn-primary">Show Table</button>
+    </div>
     <div class='row'>
         <div class='col-md-10 col-md-offset-1'>
             
@@ -8,7 +12,7 @@
 
             </div>
        
-            <ux-grid grid-columns='grid.columnData' filter-con = "grid.search"  grid-rows = 'grid.rowData'>
+            <ux-grid ng-if="grid.showTable" grid-columns='grid.columnData' filter-con = "grid.search"  grid-rows = 'grid.rowData'>
             </ux-grid>
         </div>
 
