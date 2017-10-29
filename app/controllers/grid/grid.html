@@ -1,18 +1,14 @@
 <div class='container' ng-controller='gridCtrl as grid'>
     
-    <div class="row">
+    <!-- <div class="row">
         <button ng-click="grid.showTable =  !grid.showTable" class="btn btn-primary">Show Table</button>
-    </div>
+    </div> -->
     <div class='row'>
         <div class='col-md-10 col-md-offset-1'>
             
-            <div class = 'form-group'> 
-                <label>Search</label>
-                <input type = 'text' ng-model = 'grid.search' class = 'form-control-col-md-3' placeholder="search">
-
-            </div>
        
-            <ux-grid ng-if="grid.showTable" grid-columns='grid.columnData' filter-con = "grid.search"  grid-rows = 'grid.rowData'>
+            <ux-grid grid-columns='grid.columnData'   grid-rows = 'grid.rowData' is-search=grid.search  
+           >
             </ux-grid>
         </div>
 

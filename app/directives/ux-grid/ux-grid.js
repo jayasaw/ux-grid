@@ -19,10 +19,10 @@
                 scope: {
                     gridColumns: '=',
                     gridRows: '=',
-                    delete: '@',
-                    edit: '=',
-                    save: '=',
-                    filterCon: '='
+                    // delete: '@',
+                    // edit: '=',
+                    // save: '=',
+                    isSearch: '='
                 }
             }
         })
@@ -109,7 +109,7 @@
                     }
 
                 }
-                return pages;
+                return pages.length !==0 ? pages: null;
             }
 
             /**

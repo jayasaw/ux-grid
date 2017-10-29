@@ -8,8 +8,9 @@
             this.copytext = false;
 
             var gridConfig = [];
-
-
+            vm.search = true;
+          
+          
 
             // Get Grid Data
             function fetchGridData() {
@@ -34,6 +35,7 @@
                 })
             }
 
+      
 
             // pushing promise to one array to resolve it at omnce
 

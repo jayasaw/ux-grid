@@ -19,10 +19,10 @@
 
             var userGridConfig = [
                 { columnName: 'id', displayName: 'Id', link: true, sortable: true, sortOrder: 'asc', size: '100px', editable: true },
-                { columnName: 'name', displayName: 'Name', link: true, isFilter: true, sortable: true, size: '200px', editable: true },
-                { columnName: 'city', displayName: 'City', isFilter: true, size: '200px', editable: true },
+                { columnName: 'name', displayName: 'Name', link: true, isFilter: false, sortable: true, size: '200px', editable: true },
+                { columnName: 'city', displayName: 'City', isFilter: false, size: '200px', editable: true },
                 { columnName: 'phone', displayName: 'Phone', size: '200px', editable: true },
-                { columnName: 'email', displayName: 'Email', isFilter: true, size: '200px', editable: true },
+                { columnName: 'email', displayName: 'Email', isFilter: false, size: '200px', editable: true },
                 { columnName: 'website', displayName: 'Website', size: '200px', editable: true },
                 {
                     columnName: 'button', displayName: 'Action', size: '100px', editable: false, actionButtons: [
